@@ -1,2 +1,2 @@
 # diyHashtable
-Small school task
+Algoritmit 2 kurssin demonstraatio 2 ohjelmointitehtävä.
