@@ -1,0 +1,2 @@
+# diyHashtable
+Small school task
