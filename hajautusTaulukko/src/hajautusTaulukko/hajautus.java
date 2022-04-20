@@ -1,4 +1,4 @@
-package hajautusTaulukko;
+
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -18,25 +18,32 @@ public class hajautus {
 	 * @param number lisättävä alkio.
 	 * @return palauttaa taulukon, johon lisätty uusi alkio.
 	 */
-	public static Object[] add(Object[] array, int index, int value) {
+	public static Object[] add(Object[] array, int index, Object value) {
 		
 		
 		
-		if ( array[index] == vapaa || array[index] == null || array[index] == poistettu) {
+		if (array[index].equals("null")  || array[index].equals(poistettu) ||  array[index].equals(vapaa) ) {
 			
 			array[index] = value;
+		
 		}	
 		
 		
 		else {
 			for ( int i = index; i < array.length; i++) {
 				
-				 if( array[i+1] == vapaa || array[i + 1] == null || array[i + 1] == poistettu) {
-					 array[index] = value;
+				if ( (!array[i].equals("null") || !array[i].equals(poistettu) || !array[i].equals(vapaa)) && array[i] == array[array.length-1]) {
+					i = -1;
+				}
+				
+				else if( array[i].equals(vapaa) || array[i].equals("null") || array[i].equals(poistettu)) {
+					 array[i] = value;
+					 break;
 				 }
-				 else {
-					 System.err.println("Taulukossa ei ole tilaa!");
-				 }
+//				 else {
+//					 System.err.println("Taulukossa ei ole tilaa!");
+//					 break;
+//				 }
 			}
 		}
 		
@@ -61,12 +68,16 @@ public class hajautus {
 	 
 		else {
 			for ( int i = index; i < array.length; i++) {
-				 if( array[i + 1] == value) {	 
-					 array[i + 1] = value;
+				if (array[i] != value && array[i] == array[array.length-1]) {
+					i = -1;
+				}
+				else if( array[i] == value) {	 
+					 array[i] = poistettu;
+					 break;
 				 }
-				 else {
-					 System.err.println("Taulukon kohdassa [" + i +"] ei ole arvoa [" + value +"]");
-				 }
+//				 else {
+//					 System.err.println("Taulukon kohdassa [" + i +"] ei ole arvoa [" + value +"]");
+//				 }
 			}
 		}
 	
@@ -80,9 +91,7 @@ public class hajautus {
 	
 	
 	
-	
 	public static void main(String args[]) {
-		
 		
 		int size;  	
 
@@ -97,16 +106,22 @@ public class hajautus {
 			
 			Object[] array = new Object[size];  
 
-			System.out.println("Syötä taulukolle alkioita:  ");  
+			System.out.println("Syötä taulukolle alkioita: " + "väliltä [ " + "0 - " + size + " ], tyhjä arvo saadaan syöttämällä: " + null );  
 
 					
 			for (int i = 0; i < size; i++) {
 				
-				System.out.println("indeksi: "+i);
+				System.out.println("indeksi: "+ i);
 				
-				array[i] = sc.nextInt();
+				if (sc.hasNextInt()) {
+					array[i] = sc.nextInt();
+				}
+				else if (sc.hasNext()) {
+					array[i] = sc.next();
+				}
 			}
-			
+		
+			while(true) {
 	
 			System.out.println("Taulukkosi: "+ Arrays.toString(array));
 			System.out.println("Valitse ja kirjoita toiminto, jonka haluat suorittaa taulukolle: add, remove tai exit ");
@@ -132,11 +147,11 @@ public class hajautus {
 				
 				System.out.println("Taulukkosi: " + Arrays.toString(remove(array, index, value)));
 			}
-	
-			else {
+			else if (process.equals("exit")) {
 				
-				System.err.println("Väärä syöte: " + process.toString());
-				
+				System.out.println("Suljetaan..: ");
+				sc.close();
+			}
 			}
 			}
 			
