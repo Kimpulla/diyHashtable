@@ -1,2 +1,2 @@
 # diyHashtable
-Algoritmit 2 kurssin demonstraatio 2 ohjelmointitehtävä.
+School task to create simple hashtable using arrays.
